@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development node .",
-    "start": "NODE_ENV=production node ."
+    "start": "node ."
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",

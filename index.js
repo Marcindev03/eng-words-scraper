@@ -6,7 +6,7 @@ const main = async () => {
 
   const words = await getWords();
   const translatedWords = await translateWords(
-    isDev ? words.slice(0, 20) : words
+    process.env.NODE_ENV === "development" ? words.slice(0, 20) : words
   );
 
   await saveWords(WORDS.OUTDIR, translatedWords);
