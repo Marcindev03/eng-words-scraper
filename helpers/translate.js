@@ -3,86 +3,31 @@ const { getTranslationHtml } = require("../api/apiClient");
 
 const translate = async (word) => {
   const translationHtml = await getTranslationHtml(word);
-
-  const $ = cheerio.load(translationHtml);
-  const translationsHtml = $(".pr.dsense .trans.dtrans.dtrans-se");
   const translations = [];
 
-  translationsHtml.each((i, elem) => {
-    const item = $(elem).text();
-    translations.push(item);
-  });
+  const $ = cheerio.load(translationHtml);
+  const blocks = $(".pr.dsense");
 
-  const examples = [];
-  const examplesHtml = $(".pr.dsense .eg.deg");
+  blocks.each((i, elem) => {
+    const block = $(elem);
 
-  examplesHtml.each((i, elem) => {
-    const item = $(elem).text();
-    examples.push(item);
+    const translation = block.find(".trans.dtrans.dtrans-se").text();
+    const definition = block.find(".def.ddef_d.db").text();
+
+    const examples = [];
+    block.find(".eg.deg").each((i, elem) => examples.push($(elem).text()));
+
+    translations.push({
+      translation,
+      definition,
+      examples,
+    });
   });
 
   return {
     word,
     translations,
-    examples,
   };
-
-  // return {
-  //   word: word,
-  //   translations: [
-  //     {
-  //       translation: `${word} / translation`,
-  //       examples: [
-  //         {
-  //           sentence: `${word} ${word} ${word} ${word} / sentence`,
-  //         },
-  //         {
-  //           sentence: `${word} ${word} ${word} ${word} / sentence`,
-  //         },
-  //         {
-  //           sentence: `${word} ${word} ${word} ${word} / sentence`,
-  //         },
-  //         {
-  //           sentence: `${word} ${word} ${word} ${word} / sentence`,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       translation: `${word} / translation`,
-  //       examples: [
-  //         {
-  //           sentence: `${word} ${word} ${word} ${word} / sentence`,
-  //         },
-  //         {
-  //           sentence: `${word} ${word} ${word} ${word} / sentence`,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       translation: `${word} / translation`,
-  //       examples: [
-  //         {
-  //           sentence: `${word} ${word} ${word} ${word} / sentence`,
-  //         },
-  //         {
-  //           sentence: `${word} ${word} ${word} ${word} / sentence`,
-  //         },
-  //         {
-  //           sentence: `${word} ${word} ${word} ${word} / sentence`,
-  //         },
-  //         {
-  //           sentence: `${word} ${word} ${word} ${word} / sentence`,
-  //         },
-  //         {
-  //           sentence: `${word} ${word} ${word} ${word} / sentence`,
-  //         },
-  //         {
-  //           sentence: `${word} ${word} ${word} ${word} / sentence`,
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // };
 };
 
 module.exports = { translate };
