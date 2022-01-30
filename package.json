@@ -1,0 +1,12 @@
+{
+  "name": "eng-words-scraper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "exceljs": "^4.3.0",
+    "nanospinner": "^1.0.0",
+    "node-fetch": "2"
+  }
+}
