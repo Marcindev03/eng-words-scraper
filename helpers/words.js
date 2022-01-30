@@ -4,6 +4,7 @@ const cheerio = require("cheerio");
 const { createSpinner } = require("nanospinner");
 const { getWordsHtml } = require("../api/apiClient");
 const { translate } = require("./translate");
+const { sleep } = require("./sleep");
 
 const getWords = async () => {
   const fetchLoading = createSpinner("Fetching Data").start();
@@ -23,21 +24,22 @@ const getWords = async () => {
   return words;
 };
 
-const translateWords = async (words) =>
-  new Promise((r) => {
-    const translateLoading = createSpinner("Translating Data").start();
+const translateWords = async (words) => {
+  const translateLoading = createSpinner("Translating Data").start();
 
-    const translated = [];
+  const translated = [];
 
-    const promises = words.map(async (word) =>
-      translated.push(await translate(word))
-    );
+  const length = process.env.NODE_ENV === "development" ? 50 : words.length;
 
-    Promise.all(promises).then(() => {
-      translateLoading.success();
-      r(translated);
-    });
-  });
+  for (let i = 0; i < length; i++) {
+    const item = await translate(words[i]);
+    translated.push(item);
+    sleep(50);
+  }
+
+  translateLoading.success();
+  return translated;
+};
 
 const saveWords = async (outDir, words) => {
   const savingLoading = createSpinner("Saving Data").start();

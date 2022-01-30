@@ -1,13 +1,13 @@
-const { getWords, translateWords, saveWords } = require("./helpers");
+const { getWords, translateWords, saveWords, sleep } = require("./helpers");
 const { WORDS } = require("./constants/words");
 
 const main = async () => {
+  console.log(process.env.NODE_ENV);
+
   const startTime = performance.now();
 
   const words = await getWords();
-  const translatedWords = await translateWords(
-    process.env.NODE_ENV === "development" ? words.slice(0, 20) : words
-  );
+  const translatedWords = await translateWords(words);
 
   await saveWords(WORDS.OUTDIR, translatedWords);
 
