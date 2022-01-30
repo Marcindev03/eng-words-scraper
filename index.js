@@ -1,4 +1,4 @@
-const { getWords, translateWords, saveWords, isDev } = require("./helpers");
+const { getWords, translateWords, saveWords } = require("./helpers");
 const { WORDS } = require("./constants/words");
 
 const main = async () => {
