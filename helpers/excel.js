@@ -41,7 +41,7 @@ const createDeck = async (chunk, id) => {
       const question = translation;
       const answer = ` ${word}
     
-       ${definition}
+${definition}
           ${examples.map((example) => `\n "${example}"`)}
           `;
 
