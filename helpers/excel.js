@@ -40,6 +40,7 @@ const createDeck = async (chunk, id) => {
     translations.map(({ translation, definition, examples }) => {
       const question = translation;
       const answer = ` ${word}
+      
  ${definition}
           ${examples.map((example) => `\n "${example}"`)}
           `;
