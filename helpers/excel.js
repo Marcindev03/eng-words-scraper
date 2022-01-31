@@ -40,8 +40,7 @@ const createDeck = async (chunk, id) => {
     translations.map(({ translation, definition, examples }) => {
       const question = translation;
       const answer = ` ${word}
-    
-${definition}
+ ${definition}
           ${examples.map((example) => `\n "${example}"`)}
           `;
 
@@ -52,6 +51,8 @@ ${definition}
   if (!fs.existsSync(WORDS.EXCEL_OUTDIR)) {
     fs.mkdirSync(WORDS.EXCEL_OUTDIR);
   }
+
+  await workbook.csv.writeFile(`${WORDS.EXCEL_OUTDIR}/deck_${id}.csv`);
 };
 
 module.exports = { saveAsExcel };
