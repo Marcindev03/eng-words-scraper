@@ -5,6 +5,8 @@ const { createSpinner } = require("nanospinner");
 const { getWordsHtml } = require("../api/apiClient");
 const { translate } = require("./translate");
 const { sleep } = require("./sleep");
+const { WORDS } = require("../constants/words");
+const { TRANSLATION } = require("../constants/translate");
 
 const getWords = async () => {
   const fetchLoading = createSpinner("Fetching Data").start();
@@ -34,22 +36,25 @@ const translateWords = async (words) => {
   for (let i = 0; i < length; i++) {
     const item = await translate(words[i]);
     translated.push(item);
-    sleep(50);
+    sleep(TRANSLATION.REQUEST_SPACING);
   }
 
   translateLoading.success();
   return translated;
 };
 
-const saveWords = async (outDir, words) => {
+const saveWords = async (words) => {
   const savingLoading = createSpinner("Saving JSON").start();
-  const outDirWithoutFilename = outDir.substring(0, outDir.lastIndexOf("/"));
+  const outDirWithoutFilename = WORDS.JSON_OUTDIR.substring(
+    0,
+    WORDS.JSON_OUTDIR.lastIndexOf("/")
+  );
 
   if (!fs.existsSync(outDirWithoutFilename)) {
     fs.mkdirSync(outDirWithoutFilename);
   }
 
-  await fsPromises.writeFile(outDir, JSON.stringify(words));
+  await fsPromises.writeFile(WORDS.JSON_OUTDIR, JSON.stringify(words));
 
   savingLoading.success();
 };
