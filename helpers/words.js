@@ -42,7 +42,7 @@ const translateWords = async (words) => {
 };
 
 const saveWords = async (outDir, words) => {
-  const savingLoading = createSpinner("Saving Data").start();
+  const savingLoading = createSpinner("Saving JSON").start();
   const outDirWithoutFilename = outDir.substring(0, outDir.lastIndexOf("/"));
 
   if (!fs.existsSync(outDirWithoutFilename)) {
