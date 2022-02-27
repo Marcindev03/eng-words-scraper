@@ -1,7 +1,8 @@
 const fetch = require("node-fetch");
 const { URLS } = require("../constants/api");
 
-const getWordsHtml = async () => await getHtml(URLS.WORDS);
+const get1000WordsHtml = async () => await getHtml(URLS.WORDS_1000);
+const get3000WordsHtml = async () => await getHtml(URLS.WORDS_3000);
 const getTranslationHtml = async (word) => await getHtml(URLS.TRANSLATE + word);
 
 const getHtml = async (url) => {
@@ -11,4 +12,4 @@ const getHtml = async (url) => {
   return html;
 };
 
-module.exports = { getWordsHtml, getTranslationHtml };
+module.exports = { get1000WordsHtml, get3000WordsHtml, getTranslationHtml };

@@ -2,16 +2,16 @@ const fs = require("fs");
 const fsPromises = require("fs/promises");
 const cheerio = require("cheerio");
 const { createSpinner } = require("nanospinner");
-const { getWordsHtml } = require("../api/apiClient");
+const { get3000WordsHtml, get1000WordsHtml } = require("../api/apiClient");
 const { translate } = require("./translate");
 const { sleep } = require("./sleep");
 const { WORDS } = require("../constants/words");
 const { TRANSLATION } = require("../constants/translate");
 
-const getWords = async () => {
+const getWords = async (number) => {
   const fetchLoading = createSpinner("Fetching Data").start();
-
-  const wordsHtml = await getWordsHtml();
+  const wordsHtml =
+    number === 1000 ? await get1000WordsHtml() : await get3000WordsHtml();
 
   fetchLoading.success();
 
@@ -19,7 +19,7 @@ const getWords = async () => {
 
   const $ = cheerio.load(wordsHtml);
   const htmlWords = $("p ~ p").html();
-  const words = htmlWords.split("<br>");
+  let words = htmlWords.split("<br>").map((word) => word.replace(`\n\t`, ""));
 
   scrapintLoading.success();
 
