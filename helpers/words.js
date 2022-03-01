@@ -19,7 +19,9 @@ const getWords = async (number) => {
 
   const $ = cheerio.load(wordsHtml);
   const htmlWords = $("p ~ p").html();
-  let words = htmlWords.split("<br>").map((word) => word.replace(`\n\t`, ""));
+  const words = htmlWords.split("<br>").map((word) => word.replace(`\n\t`, ""));
+
+  words.sort(() => Math.random() - 0.5);
 
   scrapintLoading.success();
 
