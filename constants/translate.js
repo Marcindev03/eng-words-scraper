@@ -1,5 +1,5 @@
 const TRANSLATION = Object.freeze({
-  REQUEST_SPACING: 50,
+  REQUEST_SPACING: 100,
 });
 
 module.exports = { TRANSLATION };
