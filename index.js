@@ -5,11 +5,16 @@ const {
   saveAsExcel,
 } = require("./helpers");
 
+const SHUFFLE = process.argv.includes("shuffle");
+const WORDS = process.argv[2];
+
 const main = async () => {
   const startTime = performance.now();
 
-  const words = await getWords();
-  const translatedWords = await translateWords(words);
+  const words = await getWords(WORDS);
+  const translatedWords = SHUFFLE
+    ? (await translateWords(words)).sort(() => Math.random() - 0.5)
+    : await translateWords(words);
 
   await saveWords(translatedWords);
 
