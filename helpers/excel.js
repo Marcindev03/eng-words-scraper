@@ -36,18 +36,7 @@ const createDeck = async (chunk, id) => {
   const workbook = new ExcelJS.Workbook();
   const sheet = workbook.addWorksheet("Sheet 1");
 
-  chunk.map(({ word, translations }) => {
-    translations.map(({ translation, definition, examples }) => {
-      const question = translation;
-      const answer = ` ${word}
-      
- ${definition}
-          ${examples.map((example) => `\n "${example}"`)}
-          `;
-
-      sheet.addRow([question, answer]);
-    });
-  });
+  sheet.addRows(chunk);
 
   if (!fs.existsSync(WORDS.EXCEL_OUTDIR)) {
     fs.mkdirSync(WORDS.EXCEL_OUTDIR);

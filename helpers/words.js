@@ -21,8 +21,6 @@ const getWords = async (number) => {
   const htmlWords = $("p ~ p").html();
   const words = htmlWords.split("<br>").map((word) => word.replace(`\n\t`, ""));
 
-  words.sort(() => Math.random() - 0.5);
-
   scrapintLoading.success();
 
   return words;
@@ -31,7 +29,7 @@ const getWords = async (number) => {
 const translateWords = async (words) => {
   const translateLoading = createSpinner("Translating Data").start();
 
-  const translated = [];
+  let translated = [];
 
   const length = process.env.NODE_ENV === "development" ? 50 : words.length;
 
@@ -41,7 +39,23 @@ const translateWords = async (words) => {
     sleep(TRANSLATION.REQUEST_SPACING);
   }
 
+  translated = translated
+    .map(({ word, translations }) =>
+      translations.map(({ translation, definition, examples }) => {
+        const question = translation;
+        const answer = ` ${word}
+      
+ ${definition}
+          ${examples.map((example) => `\n "${example}"`)}
+          `;
+
+        return [question, answer];
+      })
+    )
+    .flat();
+
   translateLoading.success();
+
   return translated;
 };
 
