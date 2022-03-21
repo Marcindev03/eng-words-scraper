@@ -3,6 +3,10 @@
 <br>
 
 ```bash
+npm start
+
+# or
+
 yarn start
 
 # Expected 3000 words, 30 decks
@@ -15,6 +19,10 @@ yarn start
 <br>
 
 ```bash
+npm run start 1000
+
+# or
+
 yarn start 1000
 
 # Expected 1000 words, 10 decks
@@ -27,6 +35,10 @@ yarn start 1000
 <br>
 
 ```bash
+npm run start 1000 shuffle
+
+# or
+
 yarn start 1000 shuffle
 
 # Expected 1000 shuffled words, 10 decks
@@ -40,5 +52,9 @@ yarn start 1000 shuffle
 <br>
 
 ```bash
+npm run dev # ...args
+
+# or
+
 yarn dev # ...args
 ```
