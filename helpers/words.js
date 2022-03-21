@@ -41,7 +41,7 @@ const translateWords = async (words) => {
 
   translated = translated
     .map(({ word, translations }) =>
-      translations.map(({ translation, definition, examples }) => {
+      translations.slice(0, 1).map(({ translation, definition, examples }) => {
         const question = translation;
         const answer = ` ${word}
       
